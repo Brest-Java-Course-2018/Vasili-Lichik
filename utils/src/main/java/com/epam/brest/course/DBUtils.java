@@ -1,8 +1,6 @@
 package com.epam.brest.course;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DBUtils {
     public Connection getConnection () throws ClassNotFoundException, SQLException {
@@ -14,4 +12,44 @@ public class DBUtils {
         return connection;
 
     }
+
+    public void createTable(Connection connection) throws SQLException {
+        System.out.println("create table");
+        String createTable = "CREATE TABLE app_user (" +
+                "user_id INT NOT NULL AUTO_INCREMENT," +
+                "login VARCHAR(255) NOT NULL," +
+                "password VARCHAR(255) NOT NULL," +
+                "description VARCHAR(255) NULL," +
+                "PRIMARY KEY (user_id)" +
+                ")";
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(createTable);
+
+
+    }
+    public void addUser(Connection connection, String login, String pass, String description) throws SQLException {
+
+        String newUser = "INSERT INTO app_user (login,password,description) VALUES (?,?,?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(newUser);
+        preparedStatement.setString(1,login);
+        preparedStatement.setString(2,pass);
+        preparedStatement.setString(3,description);
+        int x = preparedStatement.executeUpdate();
+        System.out.println ("add "+x+"strings");
+
+    }
+
+    public void getUsers (Connection connection) throws SQLException {
+        String getRecotds ="SELECT user_id, login,description FROM app_user";
+        Statement statement =connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(getRecotds);
+        while (resultSet.next()){
+            System.out.println(String.format("User: %s, %s, %s",
+                    resultSet.getInt("user_id"),
+                    resultSet.getString("login"),
+                    resultSet.getString("description")
+                    ));
+        }
+    }
+
 }
