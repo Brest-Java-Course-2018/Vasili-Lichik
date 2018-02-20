@@ -40,9 +40,9 @@ public class DBUtils {
     }
 
     public void getUsers (Connection connection) throws SQLException {
-        String getRecotds ="SELECT user_id, login,description FROM app_user";
+        String getRecords ="SELECT user_id, login,description FROM app_user";
         Statement statement =connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(getRecotds);
+        ResultSet resultSet = statement.executeQuery(getRecords);
         while (resultSet.next()){
             System.out.println(String.format("User: %s, %s, %s",
                     resultSet.getInt("user_id"),
@@ -51,5 +51,16 @@ public class DBUtils {
                     ));
         }
     }
+
+    public void deleteUser (Connection connection, int userId) throws SQLException {
+        String delRecord ="DELETE FROM app_user WHERE user_id = ?";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(delRecord);
+        preparedStatement.setInt(1,userId);
+        int x =preparedStatement.executeUpdate();
+        System.out.println (String.format("deleted %s lines",x));
+
+    }
+
 
 }
