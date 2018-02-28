@@ -13,4 +13,10 @@ public interface DepartmentDao {
     List<Department> getAllDepartment();
 
     Department getDepartmentById (Integer DepartmentId);
-}
+
+    Department addDepartment (Department department);
+
+    void update (Department department);
+
+    void deleteDepartmentById (Integer id);
+ }
