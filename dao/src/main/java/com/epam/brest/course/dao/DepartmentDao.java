@@ -12,11 +12,11 @@ public interface DepartmentDao {
 
     List<Department> getAllDepartment();
 
-    Department getDepartmentById (Integer DepartmentId);
+    Department getDepartmentById(Integer departmentId);
 
-    Department addDepartment (Department department);
+    Department addDepartment(Department department);
 
-    void update (Department department);
+    void updateDepartment(Department department);
 
-    void deleteDepartmentById (Integer id);
+    void deleteDepartmentById(Integer id);
  }

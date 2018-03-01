@@ -3,9 +3,11 @@ package com.epam.brest.course.dao;
 import com.epam.brest.course.model.Department;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -26,6 +28,11 @@ public class DepartmentDaoImpl implements  DepartmentDao {
             "SELECT departmentId, departmentName, description "
                     + "FROM department "
                     +"WHERE departmentId=:departmentId";
+
+    private final  String UPDATE_DEPARTMENT_SQL =
+                "UPDATE department " +
+                "SET departmentName=:departmentName, description=:description " +
+                "WHERE departmentId=:departmentId";
 
     public DepartmentDaoImpl (DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate (dataSource);
@@ -55,20 +62,30 @@ public class DepartmentDaoImpl implements  DepartmentDao {
 
     @Override
     public Department addDepartment(Department department) {
-        return null;
+        Integer depId = (Integer) new SimpleJdbcInsert (jdbcTemplate).
+                withTableName("department").
+                usingGeneratedKeyColumns("departmentId").
+                executeAndReturnKey(new BeanPropertySqlParameterSource(department));
+
+
+        return getDepartmentById(depId);
     }
 
     @Override
-    public void update(Department department) {
-
+    public void updateDepartment (Department department) {
+        namedParameterJdbcTemplate.update(UPDATE_DEPARTMENT_SQL,
+                new BeanPropertySqlParameterSource(department));
     }
 
     @Override
-    public void deleteDepartmentById(Integer id) {
-
+    public void deleteDepartmentById (Integer departmentId) {
+        SqlParameterSource namedParameters =
+                new MapSqlParameterSource("departmentId",departmentId);
+        namedParameterJdbcTemplate.update(UPDATE_DEPARTMENT_SQL,
+                namedParameters);
     }
 
-    private class DepartmentRowMapper implements RowMapper<Department>{
+    private class DepartmentRowMapper implements RowMapper<Department> {
 
         @Override
         public Department mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -79,6 +96,4 @@ public class DepartmentDaoImpl implements  DepartmentDao {
             return department;
         }
     }
-
-
 }
