@@ -7,10 +7,9 @@ import java.util.List;
 /**
  * Department DAO Interface.
  */
-
 public interface DepartmentDao {
 
-    List<Department> getAllDepartment();
+    List<Department> getDepartments();
 
     Department getDepartmentById(Integer departmentId);
 
@@ -19,4 +18,5 @@ public interface DepartmentDao {
     void updateDepartment(Department department);
 
     void deleteDepartmentById(Integer id);
- }
+
+}
