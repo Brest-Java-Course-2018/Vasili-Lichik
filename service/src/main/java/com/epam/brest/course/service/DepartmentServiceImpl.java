@@ -7,8 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 public class DepartmentServiceImpl implements DepartmentService{
     private static final Logger LOGGER = LogManager.getLogger();
-
-
     private DepartmentDao departmentDao;
 
     public DepartmentServiceImpl(DepartmentDao departmentDao) {

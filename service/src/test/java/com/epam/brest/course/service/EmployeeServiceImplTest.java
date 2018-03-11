@@ -1,6 +1,6 @@
 package com.epam.brest.course.service;
 
-import com.epam.brest.course.model.Department;
+import com.epam.brest.course.model.Employee;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,17 +13,22 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:test-db-spring.xml","classpath:service-test.xml", "classpath:dao.xml"})
 
-
-public class DepartmentServiceImplTest {
+public class EmployeeServiceImplTest {
     private static final int ID=1;
-    private static final String DESCRIPTION="Academic department";
+    private static final Integer SALARY=1800;
+
     @Autowired
-    private DepartmentService departmentService;
+    private EmployeeService employeeService;
 
     @Test
-    public void updateDepartmentDescription() {
-        departmentService.updateDepartmentDescription(ID,DESCRIPTION);
-        Department department = departmentService.getDepartmentById(ID);
-        Assert.assertEquals(DESCRIPTION,department.getDescription());
+    public void getEmployeeById() {
+        Employee employee = employeeService.getEmployeeById(1);
+        Assert.assertNotNull(employee);
     }
+
+    @Test
+    public void updateEmployeeSalary() {
+        employeeService.updateEmployeeSalary(ID,SALARY);
+        Employee employee = employeeService.getEmployeeById(ID);
+        Assert.assertEquals(SALARY,employee.getSalary()); }
 }
