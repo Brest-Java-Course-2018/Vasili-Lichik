@@ -1,7 +1,9 @@
 package com.epam.brest.course.dao;
 
 import com.epam.brest.course.model.Department;
+import com.epam.brest.course.model.dto.DepartmentDTO;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -18,5 +20,8 @@ public interface DepartmentDao {
     void updateDepartment(Department department);
 
     void deleteDepartmentById(Integer id);
+
+    Collection<DepartmentDTO> getDepartmentDTOs();
+
 
 }

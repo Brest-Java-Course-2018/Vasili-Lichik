@@ -1,6 +1,7 @@
 package com.epam.brest.course.dao;
 
 import com.epam.brest.course.model.Department;
+import com.epam.brest.course.model.dto.DepartmentDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 
 public class DepartmentDaoImpl implements DepartmentDao {
@@ -24,6 +26,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     public static final String DEPARTMENT_ID = "departmentId";
     public static final String DEPARTMENT_NAME = "departmentName";
     public static final String DESCRIPTION = "description";
+    public static final String AVG_SALARY = "avgSalary";
 
     @Value("${department.select}")
     private String select;
@@ -43,12 +46,18 @@ public class DepartmentDaoImpl implements DepartmentDao {
     @Value("${department.delete}")
     private String delete;
 
+    @Value("${department.selectDepartmentDTO}")
+    private String selectDepartmentDTO;
+
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
 
     public DepartmentDaoImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
-
+    /**Return all Department  from DB
+     * @return List<Department>
+     */
     @Override
     public List<Department> getDepartments() {
         LOGGER.debug("getDepartments()");
@@ -67,6 +76,11 @@ public class DepartmentDaoImpl implements DepartmentDao {
 //        return department;
 //    }
 
+    /**Return Department object with appropriate ID from DB
+     * getDepartmentById
+     * @param departmentId
+     * @return department
+     */
     @Override
     public Department getDepartmentById(Integer departmentId) {
         LOGGER.debug("getDepartmentById({})",departmentId);
@@ -76,7 +90,11 @@ public class DepartmentDaoImpl implements DepartmentDao {
                 BeanPropertyRowMapper.newInstance(Department.class));
         return department;
     }
-
+    /**
+     * Add Department object with appropriate ID to DB
+     * @param department
+     * @return department
+     */
     @Override
     public Department addDepartment(Department department) {
         LOGGER.debug("addDepartment({})",department);
@@ -107,6 +125,11 @@ public class DepartmentDaoImpl implements DepartmentDao {
         namedParameterJdbcTemplate.update(update, namedParameter);
     }
 
+    /**Delete Department object with appropriate ID from DB
+     * getDepartmentById
+     * @param departmentId
+     */
+
     @Override
     public void deleteDepartmentById(Integer departmentId) {
         namedParameterJdbcTemplate.getJdbcOperations().update(delete, departmentId);
@@ -122,6 +145,26 @@ public class DepartmentDaoImpl implements DepartmentDao {
             department.setDescription(resultSet.getString(DESCRIPTION));
             return department;
         }
+    }
+
+    private class DepartmentDTORowMapper implements RowMapper<DepartmentDTO> {
+
+        @Override
+        public DepartmentDTO mapRow(ResultSet resultSet, int i) throws SQLException {
+            DepartmentDTO departmentDTO = new DepartmentDTO();
+            departmentDTO.setDepartmentId(resultSet.getInt(DEPARTMENT_ID));
+            departmentDTO.setDepartmentName(resultSet.getString(DEPARTMENT_NAME));
+            departmentDTO.setAvgSalary(resultSet.getInt(AVG_SALARY));
+            return departmentDTO;
+        }
+    }
+
+    @Override
+    public Collection<DepartmentDTO> getDepartmentDTOs(){
+        LOGGER.debug("getDepartments()");
+        Collection<DepartmentDTO> departments =
+                namedParameterJdbcTemplate.getJdbcOperations().query(selectDepartmentDTO, new DepartmentDTORowMapper());
+        return departments;
     }
 
 

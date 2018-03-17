@@ -16,10 +16,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
 public class DepartmentServiceImplMockTest {
+
     private static final int ID=1;
     private static final String DESCRIPTION="Academic department";
     private  static final  Department DEPARTMENT =
             new Department("Distribution","Distribution department");
+
+
+
     @Autowired
     private DepartmentService departmentService;
 
@@ -27,18 +31,18 @@ public class DepartmentServiceImplMockTest {
     private DepartmentDao mockDepartmentDao;
 
     @Test
-    public void getDepartmentById() {
+    public void updateDepartmentDescription() {
         EasyMock.expect(mockDepartmentDao.getDepartmentById(EasyMock.anyInt()))
                 .andReturn(DEPARTMENT);
-        //Capture<Department> captureArgument = Capture.newInstance();
-        mockDepartmentDao.updateDepartment(EasyMock.anyObject());
+        Capture <Department> captureArgument = Capture.newInstance();
+        mockDepartmentDao.updateDepartment(EasyMock.capture(captureArgument));
         EasyMock.expectLastCall();
         EasyMock.replay(mockDepartmentDao);
 
         departmentService.updateDepartmentDescription(ID,DESCRIPTION);
 
 
-//        Department department = departmentService.getDepartmentById(ID);
-//        Assert.assertEquals(DESCRIPTION,department.getDescription());
+        Department department = captureArgument.getValue();
+        Assert.assertEquals(DESCRIPTION, department.getDescription());
     }
 }
