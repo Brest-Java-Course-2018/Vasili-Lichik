@@ -1,6 +1,7 @@
 package com.epam.brest.course.service;
 
 import com.epam.brest.course.model.Department;
+import com.epam.brest.course.model.dto.DepartmentDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -13,4 +14,6 @@ public interface DepartmentService {
     void updateDepartmentDescription (Integer departmentId,String description);
 
     Collection<Department> getDepartments();
+
+    Collection<DepartmentDTO> getDepartmentDto ();
 }
