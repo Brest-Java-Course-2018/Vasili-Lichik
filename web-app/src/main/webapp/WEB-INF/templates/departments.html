@@ -43,6 +43,7 @@
         <ul class="navbar-nav float-right">
             <li class="nav-item">
                 <a href="department.html"
+                   th:href="@{/department}"
                    class="btn btn-light"
                    title="Add department"
                    data-toggle="tooltip"
@@ -73,7 +74,10 @@
                             <td th:text="${department.departmentName}">CEO</td>
                             <td th:text="${department.avgSalary}">10000</td>
                             <td class="text-right">
-                                <a href="department.html" th:href="'/department/' + ${department.departmentId}"
+                                <a href="department.html"
+
+                                   th:href="@{|/department/${department.departmentId}|}"
+
                                    class="btn-sm btn-outline-secondary"
                                    title="Edit department"
                                    data-toggle="tooltip"

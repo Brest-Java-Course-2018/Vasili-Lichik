@@ -41,6 +41,22 @@ public class DepartmentController {
     public final String getDepartmentById(@PathVariable Integer id, Model model) {
         Department department = departmentService.getDepartmentById(id);
         model.addAttribute("department", department);
+        model.addAttribute("isNew",false);
         return "department";
     }
+
+    /**
+     * Goto department page.
+     *
+     * @return view name
+     */
+    @GetMapping(value = "/department")
+    public final String addDepartment(Model model) {
+        Department department = new Department();
+        model.addAttribute("department", department);
+        model.addAttribute("isNew",true);
+        return "department";
+    }
+
+
 }
