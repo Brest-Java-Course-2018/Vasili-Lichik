@@ -18,7 +18,6 @@
         <module>service</module>
         <module>web-app</module>
         <module>rest-app</module>
-
   </modules>
 
     <distributionManagement>
