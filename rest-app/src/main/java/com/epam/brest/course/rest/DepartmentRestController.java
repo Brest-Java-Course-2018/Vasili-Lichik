@@ -5,9 +5,8 @@ import com.epam.brest.course.service.DepartmentService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -26,9 +25,25 @@ public class DepartmentRestController {
         return  departmentService.getDepartments();
     }
 
+    @ResponseStatus(HttpStatus.FOUND)
     @GetMapping(value = "/department/{id}")
     Department department(@PathVariable Integer id) {
         LOGGER.debug("department()");
         return  departmentService.getDepartmentById(id);
     }
+
+    @ResponseStatus(HttpStatus.  CREATED)
+    @PostMapping (value ="/departments")
+    Department addDepartment (@RequestBody Department department){
+        LOGGER.debug("addDepartment({})",department);
+     return  departmentService.addDepartment(department);
+    }
+    @ResponseStatus(HttpStatus.FOUND)
+    @DeleteMapping (value ="/department/{id}")
+    Department deleteDepartment (@PathVariable Integer id){
+        LOGGER.debug("deleteDepartment({})",id);
+        return  departmentService.getDepartmentById(id);
+    }
 }
+
+//curl -v -X POST -d '{"departmentId":5,"departmentName":"HRnew","description":"HR Department new"}' -H "Content-Type: application/json" localhost:8081/departments
