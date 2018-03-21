@@ -16,4 +16,6 @@ public interface DepartmentService {
     Collection<Department> getDepartments();
 
     Collection<DepartmentDTO> getDepartmentDto ();
+
+    Department addDepartment(Department department);
 }

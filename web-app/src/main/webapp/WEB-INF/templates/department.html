@@ -55,8 +55,13 @@
                th:text="${isNew} ? 'New department' : 'Edit department'">
             Edit department
         </span>
-        <ul class="navbar-nav">
-            <li class="nav-item"><a href="departments.html"
+        <ul class="navbar-nav ">
+            <li class="nav-item">
+                <!--сабмит формы DepartmrntForm-->
+                <a href="departments.html"
+                   th:href="@{/department}"
+                   th:onclick="@{document.forms['departmentForm'].submit(); return false;}"
+
                                     class="btn btn-light"
                                     title="Save department"
                                     data-toggle="tooltip"
@@ -73,14 +78,19 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <form>
+                        <form
+                                id="departmentForm"
+                                th:object="${department}"
+                                action="departments.html"
+                                th:action="@{${#httpServletRequest.servletPath}}"
+                                th:method="@{post}">
                             <div class="form-group">
                                 <label class="form-control-label"
                                        for="field_departmentName">Department Name</label>
                                 <input class="form-control "
                                        id="field_departmentName"
                                        type="text" value="CEO"
-                                       th:value="${department.departmentName}"/>
+                                       th:field="*{departmentName}"/>
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label"
@@ -88,7 +98,7 @@
                                 <input class="form-control"
                                        id="field_description"
                                        type="text" value="CEO department"
-                                       th:value="${department.description}"/>
+                                       th:field="*{description}"/>
                             </div>
 
 

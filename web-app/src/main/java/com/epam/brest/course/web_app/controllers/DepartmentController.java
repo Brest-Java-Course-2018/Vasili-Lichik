@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Collection;
 
@@ -56,6 +57,18 @@ public class DepartmentController {
         model.addAttribute("department", department);
         model.addAttribute("isNew",true);
         return "department";
+    }
+
+    /**
+     * Add department page.
+     *
+     * @return view name
+     */
+    @PostMapping(value = "/department")
+    public final String addDepartment(Department department) {
+        //TODO Validation
+        departmentService.addDepartment(department);
+        return "departments";
     }
 
 
