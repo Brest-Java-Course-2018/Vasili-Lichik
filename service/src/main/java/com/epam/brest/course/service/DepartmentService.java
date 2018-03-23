@@ -18,4 +18,6 @@ public interface DepartmentService {
     Collection<DepartmentDTO> getDepartmentDto ();
 
     Department addDepartment(Department department);
+
+    void deleteDepartmentById (Integer departmentId);
 }

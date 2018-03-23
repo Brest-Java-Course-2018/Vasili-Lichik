@@ -46,7 +46,7 @@
     </bean>
 
     <bean id="departmentService" class="com.epam.brest.course.service.DepartmentServiceImpl">
-        <constructor-arg ref="departmentDao"/>
+        <constructor-arg value="departmentDao"/>
     </bean>
 
     <mvc:annotation-driven/>
