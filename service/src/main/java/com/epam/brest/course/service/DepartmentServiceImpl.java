@@ -1,15 +1,19 @@
 package com.epam.brest.course.service;
 
 import com.epam.brest.course.dao.DepartmentDao;
-import com.epam.brest.course.model.Department;
 import com.epam.brest.course.model.dto.DepartmentDTO;
+import com.epam.brest.course.model.Department;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
-public class DepartmentServiceImpl implements DepartmentService{
+@Transactional
+public class DepartmentServiceImpl implements DepartmentService {
+
     private static final Logger LOGGER = LogManager.getLogger();
+
     private DepartmentDao departmentDao;
 
     public DepartmentServiceImpl(DepartmentDao departmentDao) {
@@ -18,39 +22,45 @@ public class DepartmentServiceImpl implements DepartmentService{
 
     @Override
     public Department getDepartmentById(Integer departmentId) {
-        LOGGER.debug("getDepartmentById({})",departmentId);
+        LOGGER.debug("getDepartmentById({})", departmentId);
         return departmentDao.getDepartmentById(departmentId);
     }
 
     @Override
-    public void updateDepartmentDescription(Integer departmentId,String description) {
-        LOGGER.debug("updateDepartmentDescription({}{})",departmentId,description);
-        Department department = departmentDao.getDepartmentById(departmentId);
-        department.setDescription(description);
-        departmentDao.updateDepartment(department);
-
+    public Department addDepartment(Department department) {
+        LOGGER.debug("addDepartment({})", department);
+        return departmentDao.addDepartment(department);
     }
 
     @Override
-    public Collection<Department> getDepartments(){
-        LOGGER.debug("getDepartments");
+    public void updateDepartment(Department department) {
+        LOGGER.debug("updateDepartment({})", department);
+        departmentDao.updateDepartment(department);
+    }
+
+    @Override
+    public void updateDepartmentDescription(Integer departmentId, String description) {
+        LOGGER.debug("updateDepartmentDescription({}, {})", departmentId, description);
+        Department department = departmentDao.getDepartmentById(departmentId);
+        department.setDescription(description);
+        departmentDao.updateDepartment(department);
+    }
+
+    @Override
+    public Collection<Department> getDepartments() {
+        LOGGER.debug("getDepartments()");
         return departmentDao.getDepartments();
     }
 
     @Override
-    public Collection<DepartmentDTO> getDepartmentDto (){
+    public Collection<DepartmentDTO> getDepartmentDTOs() {
+        LOGGER.debug("getDepartmentDTOs()");
         return departmentDao.getDepartmentDTOs();
     }
 
     @Override
-    public Department addDepartment(Department department){
-        LOGGER.debug("addDepartment({})",department);
-        return  departmentDao.addDepartment(department);
-    }
-
-    @Override
-    public void deleteDepartmentById(Integer departmentId) {
-        LOGGER.debug("deleteDepartmentById({})",departmentId);
-        departmentDao.deleteDepartmentById(departmentId);
+    public void deleteDepartmentById(Integer id) {
+        LOGGER.debug("deleteDepartmentById({})", id);
+        departmentDao.deleteDepartmentById(id);
     }
 }

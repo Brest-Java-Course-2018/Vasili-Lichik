@@ -39,7 +39,7 @@ public class DepartmentConsumerRest implements DepartmentService{
 
     @Override
     @SuppressWarnings("unchecked")
-    public Collection<DepartmentDTO> getDepartmentDto() {
+    public Collection<DepartmentDTO> getDepartmentDTOs() {
        ResponseEntity responseEntity = restTemplate.getForEntity(url,List.class);
        List<DepartmentDTO>  departments = (List<DepartmentDTO>)responseEntity.getBody();
         return departments;
@@ -51,6 +51,11 @@ public class DepartmentConsumerRest implements DepartmentService{
         ResponseEntity responseEntity = restTemplate.postForEntity(url,department,Department.class);
         Department result = (Department)responseEntity.getBody();
         return result;
+    }
+
+    @Override
+    public void updateDepartment(Department department) {
+
     }
 
     @Override

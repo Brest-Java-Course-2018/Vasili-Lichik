@@ -23,7 +23,7 @@ public class DepartmentRestController {
     @GetMapping(value = "/departments")
     Collection<DepartmentDTO> departments() {
         LOGGER.debug("departments()");
-        return  departmentService.getDepartmentDto();
+        return  departmentService.getDepartmentDTOs();
     }
 
     @ResponseStatus(HttpStatus.FOUND)

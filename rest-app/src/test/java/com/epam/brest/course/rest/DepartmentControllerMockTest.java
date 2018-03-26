@@ -67,7 +67,7 @@ public class DepartmentControllerMockTest {
 
     @Test
     public void getDepartments() throws Exception {
-        EasyMock.expect(mockDepartmentService.getDepartmentDto())
+        EasyMock.expect(mockDepartmentService.getDepartmentDTOs())
                 .andReturn(Arrays.asList(departmentDTO1,departmentDTO2));
 
         EasyMock.replay(mockDepartmentService);

@@ -13,16 +13,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:service-mock-test.xml"})
-
-
 public class DepartmentServiceImplMockTest {
 
-    private static final int ID=1;
-    private static final String DESCRIPTION="Academic department";
-    private  static final  Department DEPARTMENT =
-            new Department("Distribution","Distribution department");
-
-
+    private static final int ID = 1;
+    private static final String DESC = "Academic Department";
+    private static final Department DEPARTMENT = new Department("Distribution", "Distribution Department");
 
     @Autowired
     private DepartmentService departmentService;
@@ -32,17 +27,15 @@ public class DepartmentServiceImplMockTest {
 
     @Test
     public void updateDepartmentDescription() {
-        EasyMock.expect(mockDepartmentDao.getDepartmentById(EasyMock.anyInt()))
-                .andReturn(DEPARTMENT);
-        Capture <Department> captureArgument = Capture.newInstance();
+        EasyMock.expect(mockDepartmentDao.getDepartmentById(EasyMock.anyInt())).andReturn(DEPARTMENT);
+        Capture<Department> captureArgument = Capture.newInstance();
         mockDepartmentDao.updateDepartment(EasyMock.capture(captureArgument));
         EasyMock.expectLastCall();
         EasyMock.replay(mockDepartmentDao);
 
-        departmentService.updateDepartmentDescription(ID,DESCRIPTION);
-
+        departmentService.updateDepartmentDescription(ID, DESC);
 
         Department department = captureArgument.getValue();
-        Assert.assertEquals(DESCRIPTION, department.getDescription());
+        Assert.assertEquals(DESC, department.getDescription());
     }
 }

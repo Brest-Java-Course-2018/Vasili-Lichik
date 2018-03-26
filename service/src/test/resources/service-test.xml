@@ -1,21 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
-
-
-
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.h2.Driver"/>
-        <property name="url" value="jdbc:h2:mem:test_db;MODE=MYSQL;DB_CLOSE_DELAY=-1"/>
-        <property name="username" value="sa"/>
-        <property name="password" value=""/>
-    </bean>
-    <jdbc:initialize-database>
-        <jdbc:script location="create-tables.sql"/>
-        <jdbc:script location="data-script.sql"/>
-    </jdbc:initialize-database>
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="namedParameterJdbcTemplate"
           class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
@@ -26,17 +13,8 @@
         <constructor-arg ref="namedParameterJdbcTemplate"/>
     </bean>
 
-    <bean id="employeeDao" class="com.epam.brest.course.dao.EmployeeDaoImpl">
-        <constructor-arg ref="namedParameterJdbcTemplate"/>
-    </bean>
-
     <bean id="departmentService" class="com.epam.brest.course.service.DepartmentServiceImpl">
         <constructor-arg ref="departmentDao"/>
     </bean>
-
-    <bean id="employeeService" class="com.epam.brest.course.service.EmployeeServiceImpl">
-        <constructor-arg ref="employeeDao"/>
-    </bean>
-
 
 </beans>

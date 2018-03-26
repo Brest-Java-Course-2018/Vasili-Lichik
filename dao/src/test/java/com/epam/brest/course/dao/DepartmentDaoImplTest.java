@@ -1,7 +1,6 @@
 package com.epam.brest.course.dao;
 
 import com.epam.brest.course.model.Department;
-import com.epam.brest.course.model.dto.DepartmentDTO;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -105,9 +103,4 @@ public class DepartmentDaoImplTest {
         Assert.assertTrue((sizeBefore - 1) == departmentDao.getDepartments().size());
     }
 
-    @Test
-    public void getDepartmentDTOs(){
-        Collection<DepartmentDTO> departmentsDto = departmentDao.getDepartmentDTOs();
-        Assert.assertFalse(departmentsDto.isEmpty());
-    }
 }

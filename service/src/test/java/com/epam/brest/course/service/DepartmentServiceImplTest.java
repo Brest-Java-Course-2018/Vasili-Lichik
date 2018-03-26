@@ -8,22 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:test-db-spring.xml","classpath:service-test.xml", "classpath:dao.xml"})
-
-
+@ContextConfiguration(locations = {"classpath:service-test.xml", "classpath:test-db-spring.xml", "classpath:dao.xml"})
 public class DepartmentServiceImplTest {
-    private static final int ID=1;
-    private static final String DESCRIPTION="Academic department";
+
+    private static final int ID = 1;
+    private static final String DESC = "Academic Department";
+
     @Autowired
     private DepartmentService departmentService;
 
     @Test
     public void updateDepartmentDescription() {
-        departmentService.updateDepartmentDescription(ID,DESCRIPTION);
+
+        departmentService.updateDepartmentDescription(ID, DESC);
+
         Department department = departmentService.getDepartmentById(ID);
-        Assert.assertEquals(DESCRIPTION,department.getDescription());
+        Assert.assertEquals(DESC, department.getDescription());
     }
 }
